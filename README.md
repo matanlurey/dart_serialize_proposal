@@ -7,6 +7,8 @@ experiment and collect feedback from both internal and external stakeholders
 and users. There is a chance this might result in no changes, or changes could
 occur at some future point in time._
 
+**Please read [CONTRIBUTING.md](CONTRIBUTING.md) before opening a PR**
+
 **Table of contents**
 
 * [Background](#background)
