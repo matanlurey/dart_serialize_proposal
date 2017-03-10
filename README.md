@@ -1,6 +1,6 @@
 # Dart for Serialization (Proposal)
 
-Design and discussion around better Dart serialization experiences.
+Design and open _discussion_ around better Dart serialization experiences.
 
 _This is **not** an official Google or Dart design or process is primarily to
 experiment and collect feedback from both internal and external stakeholders
