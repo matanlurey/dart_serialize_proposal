@@ -7,6 +7,35 @@ experiment and collect feedback from both internal and external stakeholders
 and users. There is a chance this might result in no changes, or changes could
 occur at some future point in time._
 
+**Table of contents**
+
+* [Background](#background)
+* [Available Options](#available-options)
+  * [Use untyped data structures](#use-untyped-data-structures)
+  * [Use runtime reflection](#use-runtime-reflection)
+  * [Use code generation](#use-code-generation)
+  * [Hand written classes](#hand-written-classes)
+* [Problems](#problems)
+  * [Ergonomics](#ergonomics)
+  * [Extensibility](#extensibility)
+  * [Performance](#performance)
+* [Stakeholders](#stakeholders)
+  * [Dart language team](#dart-language-team)
+  * [Dart platform team](#dart-platform-team)
+  * [Dart web users](#dart-web-users)
+  * [Flutter users](#flutter-users)
+* [References](#references)
+  * [TypeScript](#typescript)
+  * [Swift](#swift)
+  * [Kotlin](#kotlin)
+  * [C#](#c)
+  * [Rust](#rust)
+  * [Go](#go)
+* [Solutions](#solutions)
+  * [Language](#language)
+  * [Platform](#platform)
+  * [Packages](#packages)
+
 ## Background
 
 Dart is toted as a modern object-oriented client-side programming language
@@ -20,13 +49,13 @@ having a typed object model that serializes to/from data formats like JSON.
 
 [Flutter]: https://flutter.io
 
-### Available Options
+## Available Options
 
 Not surprisingly, users _are_ effectively using Dart with JSON and other
 formats like protocol buffers, today, both internally and externally, but often
 with some sort of downside.
 
-#### Use untyped data structures
+### Use untyped data structures
 
 The simplest option - just don't use types. This often produces the lowest
 overhead in terms of both runtime and code-size, and can even scale OK for
@@ -51,22 +80,22 @@ main() async {
 }
 ```
 
-#####  PROs
+####  PROs
 * Batteries included: you rarely have to go beyond the core libraries.
 * Works equally well in all platforms (browser/server/mobile).
 * Produces the lowest overhead in terms of both code-size and runtime.
 
-##### CONs
+#### CONs
 * Toolability: Good luck renaming `account['name']` to `account['first_name']`.
 * Can't statically validate against a schema or format.
 * Doesn't scale well to large teams. 
 * Exposes a mutable and iterable data structure for everything.
 
-##### Who is using this approach
+#### Who is using this approach
 * Small teams or single developers/prototypers.
 * Applications with unstructured data (so `Map` or `List` is actually OK).
 
-#### Use runtime reflection
+### Use runtime reflection
 
 Dart's runtime reflection library ([`dart:mirrors`][mirrors]) can read from and
 write to structured classes at runtime, and use metadata like annotations for
@@ -107,22 +136,22 @@ main() {
 }
 ```
 
-##### PROs
+#### PROs
 * Batteries mostly included: trivial to write a simple serialization library.
 * Potential to remove mirrors usage using source code transformation.
 
-##### CONs
+#### CONs
 * Arbitrary requirements on classes (public constructor, etc).
 * Serious platform issues: disabled for Flutter, unsuable code size on the web.
 * Runtime performance suffers compared to statically typed code.
 * Difficult to debug: reflection-based systems harder to reason about.
 * Source code transformation is mostly terrible for good build systems.
 
-##### Who is using this approach
+#### Who is using this approach
 * [`package:serialization`](https://pub.dartlang.org/packages/serialization)
 * [`package:dartson`](https://pub.dartlang.org/packages/dartson)
 
-#### Hand written classes
+### Hand written classes
 
 Of course, hand-written code and classes can do precisely what you want. For
 small projects or systems that don't change often (or for precisely optmizing
@@ -156,19 +185,19 @@ main() {
 }
 ```
 
-##### PROs
+#### PROs
 * You get exactly the behavior and code you want.
 
-##### CONs
+#### CONs
 * Any medium-sized+ data model is going to be time consuming/error prone.
 * As the data model changes must change both class and serializer.
 * Hard to ever support other data formats with writing even more code.
 * Dart feels like it has platform/language issues to those who read the code.
 
-##### Who is using this approach
+#### Who is using this approach
 * Too many to count :)
 
-#### Use code generation
+### Use code generation
 
 A time-tested option, simply generate Dart code either ahead-of-time or during
 the development process from another data source, such as a schema,
@@ -206,18 +235,18 @@ main() {
 }
 ```
 
-##### PROs
+#### PROs
 * Nicer ergonomics compared to hand writing (once build system in place).
 * Possible to get very close to (depending on requirements) hand-written code.
 * Getting more popular in web community with introduction of CLIs.
 
-##### CONs
+#### CONs
 * Difficulty of designing the "perfect system" (definition varies).
 * Static analysis errors: until you generate `main.g.dart`, at least.
 * Dart lacks a complete standard build system that works equally well for all.
 * For frameworks like Flutter that are "batteries included", this falls short.
 
-##### Who is using this approach
+#### Who is using this approach
 * [Protocal buffers](https://github.com/dart-lang/dart-protoc-plugin)
 * [`package:serializable`](https://pub.dartlang.org/packages/serializable)
 * [`package:build_value`](https://pub.dartlang.org/packages/built_value)
