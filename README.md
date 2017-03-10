@@ -485,18 +485,86 @@ and we're open to other ideas. Likely the "solution" will involve _many_ things
 
 ### Language
 
-#### Allow invoking a constructor using a JSON-Map
+#### Allow invoking a constructor using JSON/Map
+
+Users write code like this:
+
+```dart
+class User {
+  final int id;
+
+  User({this.id});
+}
+```
+
+And can invoke `User.new` (and named parameters using a JSON/Map):
+
+```dart
+main() {
+  new User(~{'id': 5});
+}
+```
+
+#### Add anonymous classes
+
+While this doesn't strictly fix the JSON/serialization issues, it does make an
+abstract class/interface be a more implicitly useful data model. For example:
+
+```dart
+main() {
+  var user = new User {id: 5};
+}
+```
 
 #### Add a new `struct` datatype with a different type system
 
-### Platform
+```dart
+struct User {
+  int id;
+}
+```
+
+And perhaps it could participate in a structural type system where something
+like a `Map` or `JsObject` (for web users) could be "cast" (represented as)
+this struct:
+
+```dart
+main() {
+  var json = {id: 5} as User;
+  print(json.id);
+}
+```
+
+#### Add a new `Json` union type
+
+```dart
+typedef Json = String | num | List<Json> | Map<Json, Json> | Null;
+```
+
+#### Add macros
+
+TODO
 
 #### Invest in better `dart:mirrors`
 
+TODO
+
+### Platform
+
+I.e. something that can be better optimized/tree-shaken across platforms.
+
 #### Invest in an universal build system for Dart packages
 
+A seamless code generation story, perhaps with better analyzer integration,
+incremental builds, and IDE-awareness would allow the least amount of changes
+to the language. We would likely still need a canonical serialization library.
+
 #### Allow `dart2js` to optimize away "wrapper" code
+
+TODO
 
 ### Packages
 
 #### Provde a canonical serialization library on top of code generation
+
+TODO
