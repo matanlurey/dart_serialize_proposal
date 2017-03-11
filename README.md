@@ -482,7 +482,53 @@ TODO.
 
 ### Go
 
-TODO.
+Go comes with the [`encoding/json`](https://golang.org/pkg/encoding/json/) package in the standard library which allows serialization and deserialization of data types.
+
+Here's an example: 
+
+(you can try this example [live in your browser](https://play.golang.org/p/BErOzJz5dq))
+
+```go
+package main
+
+import (
+    "encoding/json"
+    "fmt"
+)
+
+const personJSON = `{
+  "Name" : "John Doe",
+  "Age" : 50
+}`
+
+func main() {
+    // deserialize a JSON string to a 'person' type
+    deserializedPerson := deserializePerson(personJSON)
+    fmt.Printf("Deserialized: %+v\n\n", deserializedPerson)
+    
+    // serialize a 'person' type to a JSON string
+    serializedPerson := serializePerson(deserializedPerson)
+    fmt.Printf("Serialized: %s", serializedPerson)
+
+}
+
+type person struct {
+    Name string
+    Age  int
+}
+
+func deserializePerson(s string) person {
+    var p person
+    json.Unmarshal([]byte(s), &p)
+    return p
+}
+
+func serializePerson(p person) string {
+    b, _ := json.Marshal(p)
+    return string(b)
+}
+```
+
 
 ## Solutions
 
