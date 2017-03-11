@@ -71,7 +71,7 @@ import 'package:http/http.dart' as http;
 
 Future<Map<String, dynamic>>> fetchAccount(int id) async {
   var response = await http.get('account/$id');
-  return JSON.encode(response.body) as Map<String, dynamic>;
+  return JSON.decode(response.body) as Map<String, dynamic>;
 }
 ```
 
