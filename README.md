@@ -51,6 +51,12 @@ having a typed object model that serializes to/from data formats like JSON.
 
 [Flutter]: https://flutter.io
 
+A prior review of options in Dart that is a bit of out date is available on the
+Dart website as an article: ["Serialization in Dart"][dart_article]. It's a good
+place to start if you don't know much about the subject.
+
+[dart_article]: https://www.dartlang.org/articles/libraries/serialization
+
 ## Available Options
 
 Not surprisingly, users _are_ effectively using Dart with JSON and other
