@@ -413,7 +413,7 @@ struct RepoOwner: Glossy {
 
 ### Kotlin
 
-An example of the [`Kotson`][https://github.com/SalomonBrys/Kotson] library:
+An example of the [`Kotson`](https://github.com/SalomonBrys/Kotson) library:
 
 ```kt
 import com.github.salomonbrys.kotson.*
@@ -433,7 +433,7 @@ val list3 = gson.fromJson<List<User>>(jsonReader)
 val list4 = gson.fromJson<List<User>>(reader)
 ```
 
-### C#
+### C&#35;
 
 An example of the [`ServiceStack`][ServiceStack] library:
 
