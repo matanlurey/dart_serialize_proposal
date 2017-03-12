@@ -17,6 +17,7 @@ occur at some future point in time._
   * [Use runtime reflection](#use-runtime-reflection)
   * [Use code generation](#use-code-generation)
   * [Hand written classes](#hand-written-classes)
+  * [Use javascript interop](#use-javascript-interop)
 * [Problems](#problems)
   * [Ergonomics](#ergonomics)
   * [Extensibility](#extensibility)
@@ -260,6 +261,64 @@ main() {
 * [`package:build_value`](https://pub.dartlang.org/packages/built_value)
 * [`package:owl`](https://pub.dartlang.org/packages/owl)
 * [`package:streamy`](https://pub.dartlang.org/packages/streamy)
+
+### Use javascript interop
+
+A recent alternative, made possible with the 
+[javascript interop library](https://pub.dartlang.org/packages/js), is to use
+anonymous javascript objects which can be strongly typed and work well with code
+completion.
+
+It requires direct access to the native javascript serialization functions
+```dart
+@JS()
+library serialise.interop;
+
+import 'package:js/js.dart';
+
+@JS('JSON.parse')
+external dynamic fromJson(String text);
+
+@JS('JSON.stringify')
+external String toJson(dynamic object);
+```
+```dart
+@JS()
+@anonymous
+class Account {
+  external int get id;
+  external set id(int value);
+
+  external factory Simple({ int id });
+}
+```
+```dart
+main() {
+  Account account = fromJson(r'''
+    {
+      "id": 101
+    }
+  ''');
+  print('Account #101 is for: ${account.id'});
+}
+```
+
+[Examples and a performance comparison](https://github.com/parnham/dart-serialise)
+
+#### PROs
+* No reliance on mirrors or source transformation.
+* Compiles to less javascript than a hand-written class.
+* Very fast since it uses native browser functions.
+
+#### CONs
+* Only works in the browser and therefore only applicable to client-side 
+applications.
+* The interop package only supports properties and not fields so the class 
+definition is a little more verbose.
+
+
+#### Who is using this approach
+* Small teams or single developers/prototypers.
 
 ## Problems
 
