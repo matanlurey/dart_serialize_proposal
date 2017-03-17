@@ -256,7 +256,7 @@ main() {
 * For frameworks like Flutter that are "batteries included", this falls short.
 
 #### Who is using this approach
-* [Protocal buffers](https://github.com/dart-lang/dart-protoc-plugin)
+* [Protocol buffers](https://github.com/dart-lang/dart-protoc-plugin)
 * [`package:serializable`](https://pub.dartlang.org/packages/serializable)
 * [`package:build_value`](https://pub.dartlang.org/packages/built_value)
 * [`package:owl`](https://pub.dartlang.org/packages/owl)
